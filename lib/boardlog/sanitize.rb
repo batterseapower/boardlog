@@ -1,4 +1,4 @@
-require 'BlueCloth'
+require 'bluecloth'
 # Dubious to import this in a Merb project:
 require 'action_controller'
 
