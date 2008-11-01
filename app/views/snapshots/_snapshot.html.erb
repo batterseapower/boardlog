@@ -4,6 +4,6 @@
   </div>
   <%= image_tag snapshot.image_url, :class => 'snapshotimage' %>
   <div class="snapshotbody">
-    <%=h snapshot.body %>
+    <%= snapshot.body_html %>
   </div>
 </p>
