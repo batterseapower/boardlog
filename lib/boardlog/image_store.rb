@@ -45,6 +45,7 @@ module Boardlog
           # There was no exception, so we have claimed the path!
           break
         end
+      end
       
       # Could also guess the format using the MIME type, but that's more work!
       guessed_format = extension[1..-1].downcase
