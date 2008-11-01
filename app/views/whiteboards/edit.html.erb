@@ -1,0 +1,15 @@
+<h1>Whiteboards controller, edit action</h1>
+
+<p>Edit this file in <tt>app/views/whiteboards/edit.html.erb</tt></p>
+<p>For more information and examples of CRUD views read <a href="http://wiki.merbivore.com/howto/crud_view_example_with_merb_using_erb"> this wiki page</a>
+
+<div class="breadcrumbs">
+<%= link_to 'Whiteboards', resource(:whiteboards) %>
+<%= link_to @whiteboard.name, resource(@whiteboard) %>
+</div>
+
+<%= form_for(@whiteboard, :action => resource(@whiteboard)) do %>
+  <%= text_field :name, :label => "Name" %>
+  <!-- TODO: allow editing of owners list -->
+  <%= submit "Update" %>
+<% end =%>

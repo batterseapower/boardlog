@@ -1,0 +1,25 @@
+<h1>Whiteboards controller, show action</h1>
+
+<p>Edit this file in <tt>app/views/whiteboards/show.html.erb</tt></p>
+<p>For more information and examples of CRUD views read <a href="http://wiki.merbivore.com/howto/crud_view_example_with_merb_using_erb"> this wiki page</a>
+
+<div class="breadcrumbs">
+<%= link_to 'Whiteboards', resource(:whiteboards) %>
+</div>
+
+<h3><%=h @whiteboard.name %></h3>
+<b>by:</b>
+<% @whiteboard.owners.each do |owner| %>
+  <%=h owner.login %>
+<% end %>
+
+<div>
+<%= link_to 'Edit', resource(@whiteboard, :edit) %>
+<%= delete_button(@whiteboard, "Delete #{@whiteboard.name}") %>
+</div>
+
+<% @whiteboard.snapshots.each do |snapshot| %>
+  <div class="snapshotdate">
+    <%=h snapshot.taken_at.to_s %>
+  </div>
+<% end %>
