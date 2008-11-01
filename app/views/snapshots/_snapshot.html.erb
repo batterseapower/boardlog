@@ -1,0 +1,9 @@
+<p class="snapshot">
+  <div class="snapshotdate">
+    <%=h snapshot.taken_at.to_s %>
+  </div>
+  <%= image_tag snapshot.image_url, :class => 'snapshotimage' %>
+  <div class="snapshotbody">
+    <%=h snapshot.body %>
+  </div>
+</p>

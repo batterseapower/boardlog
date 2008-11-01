@@ -10,7 +10,7 @@
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, :snapshots)) do %>
   <%= text_field :taken_at, :label => "Taken At" %>
-  <%= file_field :image, :label => "Image" %>
+  <%= file_field :name => "image", :label => "Image" %>
   <%= text_area :body, :label => "Body" %>
   <%= submit "Create" %>
 <% end =%>

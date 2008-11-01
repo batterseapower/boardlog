@@ -6,13 +6,19 @@ include GD2
 module Boardlog
   class ImageStore
     
-    def self.store_image(recieved_file, original_file_name)
+    def self.store_image(options)
+      # Extract options
+      directory = options[:directory]
+      image = options[:image]
+      raise ArgumentError, 'Missing required option :directory' if directory.nil?
+      raise ArgumentError, 'Missing required option :image' if image.nil?
+      
       # Find appropriate extension - this is all we use the original name for
-      extension = File.extname(original_file_name)
+      extension = File.extname(image[:filename])
       
       # Create host directory
-      web_relative_base_path = 'uploads/'
-      script_relative_base_path = Merb.root / 'public' / 'uploads'
+      web_relative_base_path = '/uploads' / directory
+      script_relative_base_path = Merb.root / 'public' / 'uploads' / directory
       File.makedirs(script_relative_base_path)
       
       # Find an acceptable, unique, image file name by searching for an unused one
@@ -29,33 +35,28 @@ module Boardlog
         
         # Open the file. Possible race condition: file was created
         # between the if statement and the point we open the file.
-        try
+        begin
           # Create an empty file with this name to claim it
-          File.open(path, File::EXCL | File.WRONLY | File.CREAT) { |f| nil }
+          File.open(path, File::EXCL | File::WRONLY | File::CREAT) { |f| }
         rescue SystemCallError => error
           rescues_necessary += 1
           raise error if rescues_necessary > 3
         else
           # There was no exception, so we have claimed the path!
-          
-          # Just copy the recieved file into position
-          #FileUtils.mv recieved_file.path, path.to_s
-          
-          # Alternatively, resize the recieved file into position
-          # (ImageMagick is a pain to get working on OS X!)
-          #file = Magick::Image.read(recieved_file.path).first
-          #file.resize_to_fit!(800, 600)
-          #file.write(path.to_s)
-          
-          # Alternatively, resize the recieved file into position
-          image = Image.import(recieved_file.path)
-          image.resize! 800, 600
-          image.export(path.to_s)
+          break
         end
+      
+      # Could also guess the format using the MIME type, but that's more work!
+      guessed_format = extension[1..-1].downcase
+      
+      # Resize the image we were supplied with and save that in the final location
+      Image.import(image[:tempfile].path, :format => guessed_format) do |image|
+        image.resize!(800, 600, :resample => true)
+        image.export(path)
       end
       
       # Construct a URL relative to HTTPROOT for the caller
-      web_relative_base_path + filename
+      web_relative_base_path / filename
     end
 
   end

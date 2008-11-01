@@ -8,16 +8,6 @@
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
 </div>
 
-<% @snapshots.each do |snapshot| %>
-  <p class="snapshot">
-    <div class="snapshotdate">
-      <%=h snapshot.taken_at.to_s %>
-    </div>
-    <%= image_tag snapshot.image_url, :class => 'snapshotimage' %>
-    <div class="snapshotbody">
-      <%=h snapshot.body %>
-    </div>
-  </p>
-<% end %>
+<%= partial :snapshot, :with => @snapshots %>
 
 <%= link_to 'New', resource(@whiteboard, :snapshots, :new) %>

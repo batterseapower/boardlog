@@ -35,9 +35,9 @@ class Snapshots < Application
     check_user_owns_whiteboard
     @snapshot = Snapshot.new(snapshot)
     @snapshot.whiteboard = @whiteboard
-    @snapshot.image_url = Boardlog::ImageStore.store_image(params[:image][:tempfile], params[:image][:filename])
+    @snapshot.image_url = Boardlog::ImageStore.store_image :directory => "snapshots", :image => params[:image]
     if @snapshot.save
-      redirect resource(@snapshot), :message => {:notice => "Snapshot was successfully created"}
+      redirect resource(@whiteboard, @snapshot), :message => {:notice => "Snapshot was successfully created"}
     else
       message[:error] = "Snapshot failed to be created"
       render :new
@@ -49,7 +49,7 @@ class Snapshots < Application
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
     if @snapshot.update_attributes(snapshot)
-       redirect resource(@snapshot)
+       redirect resource(@whiteboard, @snapshot)
     else
       display @snapshot, :edit
     end
@@ -60,7 +60,7 @@ class Snapshots < Application
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
     if @snapshot.destroy
-      redirect resource(:snapshots)
+      redirect resource(@whiteboard, :snapshots)
     else
       raise InternalServerError
     end
