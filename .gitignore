@@ -1,3 +1,4 @@
+# Ignores from Merb
 .DS_Store
 log/*
 tmp/*
@@ -16,3 +17,6 @@ src/*
 .hgignore
 .hg/*
 .svn/*
+
+# Custom ignores
+public/uploads
