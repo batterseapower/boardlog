@@ -11,7 +11,7 @@
 <b>by:</b>
 
 <% @whiteboard.owners.each do |owner| %>
-  <%=h owner.login %>
+  <%=h owner.name %>
 <% end %>
 
 <% if user_owns_whiteboard? then %>
