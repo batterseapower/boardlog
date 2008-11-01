@@ -8,7 +8,7 @@
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
 </div>
 
-<%= form_for (@snapshot, :action => resource(@whiteboard, @snapshot)) do %>
+<%= form_for (@snapshot, :action => resource(@whiteboard, :snapshots)) do %>
   <%= text_field :taken_at, :label => "Taken At" %>
   <%= file_field :image, :label => "Image" %>
   <%= text_area :body, :label => "Body" %>

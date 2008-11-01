@@ -17,24 +17,25 @@ class Snapshots < Application
 
   def new
     only_provides :html
+    check_user_owns_whiteboard
     @snapshot = Snapshot.new
     @snapshot.taken_at = Date.today
-    check_user_owns_whiteboard
     display @snapshot
   end
 
   def edit(id)
     only_provides :html
+    check_user_owns_whiteboard
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
-    check_user_owns_whiteboard
     display @snapshot
   end
 
   def create(snapshot)
+    check_user_owns_whiteboard
     @snapshot = Snapshot.new(snapshot)
     @snapshot.whiteboard = @whiteboard
-    check_user_owns_whiteboard
+    @snapshot.image_url = Boardlog::ImageStore.store_image(params[:image][:tempfile], params[:image][:filename])
     if @snapshot.save
       redirect resource(@snapshot), :message => {:notice => "Snapshot was successfully created"}
     else
@@ -44,9 +45,9 @@ class Snapshots < Application
   end
 
   def update(id, snapshot)
+    check_user_owns_whiteboard
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
-    check_user_owns_whiteboard
     if @snapshot.update_attributes(snapshot)
        redirect resource(@snapshot)
     else
@@ -55,9 +56,9 @@ class Snapshots < Application
   end
 
   def destroy(id)
+    check_user_owns_whiteboard
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
-    check_user_owns_whiteboard
     if @snapshot.destroy
       redirect resource(:snapshots)
     else
