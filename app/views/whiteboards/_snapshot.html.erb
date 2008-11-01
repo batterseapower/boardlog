@@ -1,6 +1,6 @@
 <p class="snapshot">
   <div class="snapshotdate">
-    <%= link_to snapshot.taken_at.to_s, url(:whiteboard_snapshot, snapshot.whiteboard, snapshot) %>
+    <%= link_to_snapshot snapshot %>
   </div>
   <%= image_tag snapshot.image_url, :class => 'snapshotimage' %>
 </p>

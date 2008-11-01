@@ -9,5 +9,9 @@ module Merb
       whiteboard.owners.include? session.user
     end
 
+    def link_to_snapshot(snapshot)
+      link_to Boardlog::DateTime.unparse(snapshot.taken_at), url(:whiteboard_snapshot, snapshot.whiteboard, snapshot)
+    end
+
   end
 end
