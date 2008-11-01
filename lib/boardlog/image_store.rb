@@ -1,4 +1,7 @@
 require 'ftools'
+require 'gd2'
+
+include GD2
 
 module Boardlog
   class ImageStore
@@ -39,9 +42,15 @@ module Boardlog
           #FileUtils.mv recieved_file.path, path.to_s
           
           # Alternatively, resize the recieved file into position
-          file = Magick::Image.read(recieved_file.path).first
-          file.resize_to_fit!(800, 600)
-          file.write(path.to_s)
+          # (ImageMagick is a pain to get working on OS X!)
+          #file = Magick::Image.read(recieved_file.path).first
+          #file.resize_to_fit!(800, 600)
+          #file.write(path.to_s)
+          
+          # Alternatively, resize the recieved file into position
+          image = Image.import(recieved_file.path)
+          image.resize! 800, 600
+          image.export(path.to_s)
         end
       end
       
