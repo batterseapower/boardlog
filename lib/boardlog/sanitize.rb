@@ -10,7 +10,7 @@ module Boardlog
     end
     
     def self.sanitize_html(html)
-      ::HTML::WhiteListSanitizer.new.sanitize(html, :tags => %w(b i ol ul li pre code tt), :attributes => %w(id class style))
+      ::HTML::WhiteListSanitizer.new.sanitize(html, :tags => %w(b i ol ul li pre code tt p), :attributes => %w(id class style))
     end
   end
 end
