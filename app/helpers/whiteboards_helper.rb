@@ -5,5 +5,9 @@ module Merb
       check_user_owns_this_whiteboard @whiteboard
     end
 
+    def user_owns_whiteboard?
+      user_owns_this_whiteboard? @whiteboard
+    end
+
   end
 end

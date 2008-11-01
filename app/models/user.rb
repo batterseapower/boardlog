@@ -13,7 +13,11 @@ class User
   
   has n, :owned_whiteboards, :through => Resource, :class_name => 'Whiteboard'
   
-  property :id,     Serial
-  property :login,  String
+  property :id, Serial
+  property :login, String, :length => (1..50)
+  
+  def gravatar_url(size)
+    gravatar_url_for_email(login, :rating => 'PG', :size => size)
+  end
   
 end

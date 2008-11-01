@@ -9,17 +9,20 @@
 
 <h3><%=h @whiteboard.name %></h3>
 <b>by:</b>
+
 <% @whiteboard.owners.each do |owner| %>
   <%=h owner.login %>
 <% end %>
 
-<div>
-<%= link_to 'Edit', resource(@whiteboard, :edit) %>
-<%= delete_button(@whiteboard, "Delete #{@whiteboard.name}") %>
-</div>
-
-<% @whiteboard.snapshots.each do |snapshot| %>
-  <div class="snapshotdate">
-    <%=h snapshot.taken_at.to_s %>
+<% if user_owns_whiteboard? then %>
+  <div>
+  <%= link_to 'Edit', resource(@whiteboard, :edit) %>
+  <%= delete_button(@whiteboard, "Delete #{@whiteboard.name}") %>
   </div>
 <% end %>
+
+<h4>Recent Snapshots<h4>
+<div>
+<%= partial :snapshot, :with => @snapshots %>
+</div>
+<%= link_to 'Show All', resource(@whiteboard, :snapshots) %>

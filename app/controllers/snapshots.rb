@@ -19,7 +19,7 @@ class Snapshots < Application
     only_provides :html
     check_user_owns_whiteboard
     @snapshot = Snapshot.new
-    @snapshot.taken_at = Date.today
+    @snapshot.taken_at = Time.now
     display @snapshot
   end
 
@@ -28,14 +28,16 @@ class Snapshots < Application
     check_user_owns_whiteboard
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
+    
     display @snapshot
   end
 
   def create(snapshot)
     check_user_owns_whiteboard
+    
     @snapshot = Snapshot.new(snapshot)
     @snapshot.whiteboard = @whiteboard
-    @snapshot.image_url = Boardlog::ImageStore.store_image :directory => "snapshots", :image => params[:image]
+    @snapshot.image_url, _always_nil = image_url_from_params(@snapshot)
     if @snapshot.save
       redirect resource(@whiteboard, @snapshot), :message => {:notice => "Snapshot was successfully created"}
     else
@@ -48,8 +50,11 @@ class Snapshots < Application
     check_user_owns_whiteboard
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
-    if @snapshot.update_attributes(snapshot)
-       redirect resource(@whiteboard, @snapshot)
+    
+    @snapshot.image_url, old_image_url = image_url_from_params(@snapshot)
+    if @snapshot.update_attributes(snapshot, :taken_at, :body)
+      Boardlog::ImageStore.new("snapshots").try_delete_image old_image_url if old_image_url
+      redirect resource(@whiteboard, @snapshot)
     else
       display @snapshot, :edit
     end
@@ -59,6 +64,7 @@ class Snapshots < Application
     check_user_owns_whiteboard
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
+    
     if @snapshot.destroy
       redirect resource(@whiteboard, :snapshots)
     else
@@ -71,6 +77,15 @@ class Snapshots < Application
     def setup_whiteboard
       @whiteboard = Whiteboard.get(params[:whiteboard_id])
       raise NotFound unless @whiteboard
+    end
+    
+    def image_url_from_params(current_snapshot)
+      case params[:image_source]
+        when "original": [current_snapshot.image_url, nil]
+        when "upload": [Boardlog::ImageStore.new("snapshots").store_image(params[:image_upload]), current_snapshot.image_url]
+        when "url": [params[:image_url], current_snapshot.image_url]
+        else nil
+      end
     end
 
 end # Snapshots

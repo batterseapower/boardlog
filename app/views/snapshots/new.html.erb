@@ -9,8 +9,15 @@
 </div>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, :snapshots)) do %>
+  <!-- TODO: use date/time picker -->
   <%= text_field :taken_at, :label => "Taken At" %>
-  <%= file_field :name => "image", :label => "Image" %>
+  
+  <!-- TODO: use JS to enable/disable controls as appropriate -->
+  <%= radio_button :name => "image_source", :value => "upload", :label => "Upload new image", :checked => true %>
+  <%= file_field :name => "image_upload", :label => "Image" %>
+  <%= radio_button :name => "image_source", :value => "url", :label => "Use image at url" %>
+  <%= text_field :name => "image_url", :label => "URL" %>
+  
   <%= text_area :body, :label => "Body" %>
   <%= submit "Create" %>
 <% end =%>

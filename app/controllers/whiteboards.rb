@@ -5,17 +5,21 @@ class Whiteboards < Application
 
   def index
     @whiteboards = Whiteboard.all
+    
     display @whiteboards
   end
 
   def show(id)
     @whiteboard = Whiteboard.get(id)
+    @snapshots = @whiteboard.snapshots(:limit => 10)
     raise NotFound unless @whiteboard
+    
     display @whiteboard
   end
 
   def new
     only_provides :html
+    
     @whiteboard = Whiteboard.new
     display @whiteboard
   end
@@ -25,6 +29,7 @@ class Whiteboards < Application
     @whiteboard = Whiteboard.get(id)
     raise NotFound unless @whiteboard
     check_user_owns_whiteboard
+    
     display @whiteboard
   end
 
@@ -43,7 +48,8 @@ class Whiteboards < Application
     @whiteboard = Whiteboard.get(id)
     raise NotFound unless @whiteboard
     check_user_owns_whiteboard
-    if @whiteboard.update_attributes(whiteboard)
+    
+    if @whiteboard.update_attributes(whiteboard, :name)
        redirect resource(@whiteboard)
     else
       display @whiteboard, :edit
@@ -54,6 +60,7 @@ class Whiteboards < Application
     @whiteboard = Whiteboard.get(id)
     raise NotFound unless @whiteboard
     check_user_owns_whiteboard
+    
     if @whiteboard.destroy
       redirect resource(:whiteboards)
     else
