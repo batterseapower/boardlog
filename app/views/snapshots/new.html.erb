@@ -8,6 +8,8 @@
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
 </div>
 
+<%= error_messages_for :snapshot %>
+
 <%= form_for (@snapshot, :action => resource(@whiteboard, :snapshots)) do %>
   <!-- TODO: use date/time picker -->
   <%= text_field :taken_at, :label => "Taken At" %>

@@ -4,6 +4,7 @@ require 'gd2'
 include GD2
 
 module Boardlog
+  # TODO: generate thumbnails as well?
   class ImageStore
     
     def initialize(directory)
@@ -23,8 +24,12 @@ module Boardlog
       iteration = 0
       rescues_necessary = 0
       while iteration += 1
-        # Construct the filename we'll try this time
-        filename = Time.now.strftime("%Y%m%d-%H%M%S-#{iteration}#{extension}")
+        # Construct the filename we'll try this time:
+        filename = "#{generate_filename}#{extension}"
+        # We used to use this algorithm to generate file names but the results
+        # are insufficiently random to give privacy:
+        #filename = Time.now.strftime("%Y%m%d-%H%M%S-#{iteration}#{extension}")
+        
         path = @absolute_base / filename
         
         # Try to avoid obviously bad paths
@@ -67,6 +72,16 @@ module Boardlog
       # Delete the file. This is safe because the match cannot contain e.g. ..
       File.delete(@absolute_base / match.to_s)
     end
+    
+    private
+    
+      # Modified from http://www.travisonrails.com/2007/06/07/Generate-random-text-with-Ruby
+      def generate_filename(length=32)
+        chars = 'abcdefghijklmnpoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+        password = ''
+        length.times { |i| password << chars[rand(chars.length)] }
+        password
+      end
 
   end
 end

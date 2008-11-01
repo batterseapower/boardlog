@@ -7,6 +7,8 @@
 <%= link_to 'Whiteboards', resource(:whiteboards) %>
 </div>
 
+<%= error_messages_for :whiteboard %>
+
 <%= form_for (@whiteboard, :action => resource(:whiteboards)) do %>
   <%= text_field :name, :label => "Name" %>
   <!-- TODO: allow editing of owners list -->

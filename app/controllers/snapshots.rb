@@ -12,12 +12,16 @@ class Snapshots < Application
   def show(id)
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
+    
+    @previous = @snapshot.previous
+    @next = @snapshot.next
     display @snapshot
   end
 
   def new
     only_provides :html
     check_user_owns_whiteboard
+    
     @snapshot = Snapshot.new
     @snapshot.taken_at = Time.now
     display @snapshot

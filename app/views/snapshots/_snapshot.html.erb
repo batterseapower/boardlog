@@ -1,6 +1,6 @@
 <p class="snapshot">
   <div class="snapshotdate">
-    <%=h snapshot.taken_at.to_s %>
+    <%= link_to Boardlog::DateTime.unparse(snapshot.taken_at), url(:whiteboard_snapshot, snapshot.whiteboard, snapshot) %>
   </div>
   <%= image_tag snapshot.image_url, :class => 'snapshotimage' %>
   <div class="snapshotbody">

@@ -6,9 +6,13 @@
 <div class="breadcrumbs">
 <%= link_to 'Whiteboards', resource(:whiteboards) %>
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
+<%= link_to 'Snapshots', resource(@whiteboard, :snapshots) %>
 </div>
 
 <%= partial :snapshot, :with => @snapshot %>
+
+<%= link_to 'Previous', resource(@whiteboard, @previous) if @previous %>
+<%= link_to 'Next', resource(@whiteboard, @next)  if @next %>
 
 <% if user_owns_whiteboard? then %>
   <div>

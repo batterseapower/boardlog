@@ -1,3 +1,4 @@
+require 'boardlog/date_time'
 require 'boardlog/exceptions'
 require 'boardlog/gravatar'
 require 'boardlog/image_store'

@@ -6,8 +6,11 @@
 <div class="breadcrumbs">
 <%= link_to 'Whiteboards', resource(:whiteboards) %>
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
+<%= link_to 'Snapshots', resource(@whiteboard, :snapshots) %>
 <%= link_to 'Snapshot', resource(@whiteboard, @snapshot) %>
 </div>
+
+<%= error_messages_for :snapshot %>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, @snapshot)) do %>
   <!-- TODO: use date/time picker -->
