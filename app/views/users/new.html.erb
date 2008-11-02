@@ -1,0 +1,10 @@
+<%= error_messages_for :user %>
+
+<%= form_for(@user, :action => resource(:users)) do %>
+	<table>
+	<tr><td>E-mail</td><td><%= text_field :email %></td></tr>
+	<tr><td>Name</td><td><%= text_field :name %></td></tr>
+	<tr><td>Password</td><td><%= password_field :password %></td></tr>
+	<tr><td></td><td align='right'><%= submit "Signup" %></td></tr>
+	</table>
+<% end =%>
