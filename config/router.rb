@@ -29,6 +29,7 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
   # RESTful routes
   resources :whiteboards do |whiteboards|
+    whiteboards.resources :images
     whiteboards.resources :snapshots
   end
   

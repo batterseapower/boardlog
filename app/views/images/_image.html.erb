@@ -1,0 +1,6 @@
+<p class="image">
+  <div class="imagedate">
+    Current date taken guess: <%=h image.taken_at_guess ? Boardlog::Format.date_time(image.taken_at_guess) : "No idea!" %>
+  </div>
+  <%= link_to_image image %>
+</p>

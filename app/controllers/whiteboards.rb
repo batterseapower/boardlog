@@ -35,7 +35,7 @@ class Whiteboards < Application
 
   def create(whiteboard)
     @whiteboard = Whiteboard.new(whiteboard)
-    whiteboard.owners << session.user
+    @whiteboard.owners << session.user
     if @whiteboard.save
       redirect resource(@whiteboard), :message => {:notice => "Whiteboard was successfully created"}
     else

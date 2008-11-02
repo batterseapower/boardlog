@@ -1,5 +1,5 @@
 module Merb
-  module SnapshotsHelper
+  module ImagesHelper
     include Boardlog::HasWhiteboardHelper
   end
-end
+end # Merb

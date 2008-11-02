@@ -10,7 +10,7 @@
 <%= link_to 'Snapshot', resource(@whiteboard, @snapshot) %>
 </div>
 
-<%= error_messages_for :snapshot %>
+<%= error_messages_for @snapshot %>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, @snapshot)) do %>
   <!-- TODO: use date/time picker -->

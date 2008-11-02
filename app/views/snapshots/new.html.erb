@@ -8,17 +8,25 @@
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
 </div>
 
-<%= error_messages_for :snapshot %>
+<%= error_messages_for @snapshot %>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, :snapshots)) do %>
   <!-- TODO: use date/time picker -->
   <%= text_field :taken_at, :label => "Taken At" %>
   
-  <!-- TODO: use JS to enable/disable controls as appropriate -->
-  <%= radio_button :name => "image_source", :value => "upload", :label => "Upload new image", :checked => true %>
-  <%= file_field :name => "image_upload", :label => "Image" %>
+  <!-- TODO: use JS to enable/disable controls as appropriate? -->
   <%= radio_button :name => "image_source", :value => "url", :label => "Use image at url" %>
   <%= text_field :name => "image_url", :label => "URL" %>
+  <%= radio_button :name => "image_source", :value => "id", :label => "Use image from the uploaded pool", :checked => true %>
+  <div class="imagepicker">
+    <% @whiteboard.images.each do |image| %>
+      <div class="imagealternative">
+        <%= image_tag image.url, :width => 100, :height => 75 %>
+        <%= radio_button :name => "image_id", :value => image.id %>
+      </div>
+    <% end %>
+  </div>
+  <%= link_to "Upload another image", resource(@whiteboard, :images, :new) %>
   
   <%= text_area :body, :label => "Body (you may use Markdown)" %>
   <%= submit "Create" %>
