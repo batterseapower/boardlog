@@ -11,7 +11,6 @@
 <%= error_messages_for @whiteboard %>
 
 <%= form_for(@whiteboard, :action => resource(@whiteboard)) do %>
-  <%= text_field :name, :label => "Name" %>
-  <!-- TODO: allow editing of owners list -->
+  <%= partial :form, :whiteboard => @whiteboard %>
   <%= submit "Update" %>
 <% end =%>

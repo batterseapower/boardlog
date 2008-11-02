@@ -6,28 +6,12 @@
 <div class="breadcrumbs">
 <%= link_to 'Whiteboards', resource(:whiteboards) %>
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
+<%= link_to 'Snapshots', resource(@whiteboard, :snapshots) %>
 </div>
 
 <%= error_messages_for @snapshot %>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, :snapshots)) do %>
-  <!-- TODO: use date/time picker -->
-  <%= text_field :taken_at, :label => "Taken At" %>
-  
-  <!-- TODO: use JS to enable/disable controls as appropriate? -->
-  <%= radio_button :use_external_image, :value => true, :label => "Use image at url", :checked => @snapshot.image_external? %>
-  <%= text_field :external_image_url, :label => "URL" %>
-  <%= radio_button :use_external_image, :value => false, :label => "Use image from the uploaded pool", :checked => @snapshot.image_internal? %>
-  <div class="imagepicker">
-    <% @whiteboard.images.each do |image| %>
-      <div class="imagealternative">
-        <%= image_tag image.url, :width => 100, :height => 75 %>
-        <%= radio_button :internal_image, :value => image, :checked => @snapshot.internal_image == image %>
-      </div>
-    <% end %>
-  </div>
-  <%= link_to "Upload another image", resource(@whiteboard, :images, :new) %>
-  
-  <%= text_area :body, :label => "Body (you may use Markdown)" %>
+  <%= partial :form, :snapshot => @snapshot %>
   <%= submit "Create" %>
 <% end =%>
