@@ -15,8 +15,8 @@ class User
   has n, :groups, :through => Resource
   
   property :id, Serial
-  property :name, String, :length => (1..50)
-  property :email, String, :length => (1..80)
+  property :name, String, :length => (1..50), :unique => true
+  property :email, String, :length => (1..80), :unique => true
   
   validates_format :email, :as => :email_address
   
