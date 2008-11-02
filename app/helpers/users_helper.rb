@@ -1,5 +1,5 @@
 module Merb
-  module UserHelper
+  module UsersHelper
 
     def check_user_is_user
       raise Boardlog::NotCorrectUser unless user_is_user?
