@@ -7,6 +7,7 @@ class Snapshot
   property :taken_at, DateTime, :nullable => false
   property :image_url, String, :nullable => false, :length => (1..512)
   property :body, Text, :nullable => false
+  property :public, Boolean, :nullable => false
 
   def previous
     whiteboard.snapshots.first(:taken_at.lt => taken_at)
