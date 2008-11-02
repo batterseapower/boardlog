@@ -13,6 +13,7 @@ body, html {
 #top_container {
 	background-color:#e2ece2;
 	border-bottom:solid #ccc 1px;
+	padding:0px;
 }
 
 #bottom_container {
@@ -22,7 +23,9 @@ body, html {
 }
 
 #welcome_banner {
-	border:none;
+	margin:0px;
+	padding:0px;
+	border:0px;
 }
 
 #content_container {
@@ -47,9 +50,21 @@ body, html {
 	margin-bottom:20px;
 }
 
+
+.non_constrained_box {
+	float:left;
+	border:solid 1px #ccc;
+	padding:10px;
+	clear:both;
+	margin:10px;
+}
+
 h3 {
 	font-family:Lucida Sans Unicode,Verdana, Sans;
 	font-size:1.3em;
+	font-variant:small-caps;
+	color:#3c8541;
+	margin:5px;
 }
 
 #post_container {
@@ -68,4 +83,16 @@ h3 {
 #controls_container {
 	padding:10px;
 	clear:both;
+}
+
+a {
+	color:#5088a0;
+}
+
+a:hover {
+	text-decoration:none;
+}
+
+td {
+	padding:3px;
 }

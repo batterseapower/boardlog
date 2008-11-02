@@ -12,15 +12,20 @@ class Users < Application
       redirect resource(@user), :message => {:notice => "New user was successfully created"}
     else
       message[:error] = "User failed to be created"
-      render :signup
+      render :new
     end
   end
    
   def new
-  	render
+  	@user = User.new
+  	display @user
   end
   
-  def show
+  def show(id)
+    @user = User.get(id)
+    raise NotFound unless @user
+    
+    display @user
   end
   
   def edit

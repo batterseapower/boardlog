@@ -1,25 +1,62 @@
-<div align='center' id='top_container'>
-<a href='/home/index'><img src='/images/welcome.png' id='welcome_banner' /></a>
-</div>
-<div id='content_container'>
-	<div id='content_inner_container'>
-		<div class='info_box'>
-		<h3>What is Boardlog?</h3>
-		Boardlog is a blogging website designed specifically for cataloguing your whiteboard (or blackboard) based endeavours.
-		</div>
-		<div class='info_box'>
-		<h3>Collaboration</h3>
-		We understand that people work in offices, in groups, or alone. You can start a Boardlog account for just yourself, or for a group of people. You can even have multiple boardlogs within a group.
-		</div>
-		<div class='info_box'>
-		<h3>Login or <a href='signup'>Signup</a></h3>
-		<form method='post' action='signup'>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Boardlog. Welcome.</title>
+	<link rel='stylesheet' href='/stylesheets/main.css' type='text/css' />
+</head>
+<body>
+<div align='center' id='main_container'>
+	<div align='center' id='top_container'>
+	<a href='front.html'><img src='/images/welcome.png' id='welcome_banner' /></a>
+	</div>
+	<div id='content_container'>
+		<div id='content_inner_container'>
+			<div class='info_box'>
+			<h3>What is Boardlog?</h3>
+			Boardlog is a blogging website designed specifically for cataloguing your whiteboard (or blackboard) based endeavours.
+			</div>
+			<div class='info_box'>
+			<h3>Collaboration</h3>
+			We understand that people work in offices, in groups, or alone. You can start a Boardlog account for just yourself, or for a group of people. You can even have multiple boardlogs within a group.
+			</div>
+			<div class='info_box'>
+			<h3>Login or <%= link_to "Signup", "/users/new" %></h3>
+			<form action="/login" method="POST" accept-charset="utf-8">				
+			<input type="hidden" name="_method" value="PUT" />
 			<table>
-				<tr><td align='right'>Username:</td><td><input name='username' id='username'></td></tr>
-				<tr><td align='right'>Password:</td><td><input name='password' id='password' type='password'></td></tr>
-				<tr><td></td><td align='right'><input type='submit' value='Login'></td></tr>
+			<tr>
+				<td>Email:</td>
+			  	<td><input type="text" name="email" value="" id="email"></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" name="password" value="" id="password"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" name="Submit" value="Log In" id="Submit"></td>
+			</tr>
 			</table>
-		</form>
-		</div><br /><br />
- 	</div>
+			</form>
+			<br /><br />
+			</div>
+			<div align='center'>
+				<div class='non_constrained_box'>
+				<h3>Boards on Boardlog.</h3><br />
+					<%= partial("whiteboard", :with => @whiteboards) %>
+				</div>
+				<div class='non_constrained_box'>
+				<h3>Groups on Baoardlog.</h3><br />
+					<%= partial("group", :with => @groups) %>
+				</div>
+			</div>
+	 	</div>
+	</div>
+	<div id='bottom_container' align='center'>
+	Max Bolingbroke and Dominic Orchard (2008).
+	</div>
 </div>
+</body>
+</html>

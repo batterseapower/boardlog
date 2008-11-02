@@ -12,6 +12,7 @@ class User
   include DataMapper::Resource
   
   has n, :owned_whiteboards, :through => Resource, :class_name => 'Whiteboard'
+  has n, :groups
   
   property :id, Serial
   property :name, String, :length => (1..50)

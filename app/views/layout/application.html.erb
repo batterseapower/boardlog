@@ -10,15 +10,21 @@
   <link rel='stylesheet' href='/stylesheets/main.css' type='text/css' media="screen" charset="utf-8" />
 </head>
 <body>
-  <div align='center' id='main_container'>
-    <%#= message[:notice] %>
-    <%= link_to 'Logout', '/logout' %>
+<div align='center' id='main_container'>
+	<div align='center' id='top_container'>
+	<a href='front.html'><img src='/images/top.png' id='welcome_banner' /></a>
+	</div>
+	<div id='content_container' style='width:100%'>
+		<div id='content_inner_container' style='padding:15px;'>
+    	<%#= message[:notice] %>
 
-    <%= catch_content :for_layout %>
-
-    <div id='bottom_container' align='center'>
-    Max Bolingbroke and Dominic Orchard (2008).
-    </div>
-  </div>
+    	<%= catch_content :for_layout %>
+	    <%= link_to 'Logout', '/logout' %>
+	 	</div>
+	</div>
+	<div id='bottom_container' align='center'>
+	Max Bolingbroke and Dominic Orchard (2008).
+	</div>
+</div>
 </body>
 </html>
