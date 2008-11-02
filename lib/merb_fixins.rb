@@ -1,0 +1,1 @@
+require 'merb_fixins/form_helpers'

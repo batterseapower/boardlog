@@ -21,6 +21,7 @@ end
 Merb::BootLoader.before_app_loads do
   # This will get executed after dependencies have been loaded but before your app's classes have loaded.
   require 'boardlog'
+  require 'merb_fixins'
 end
  
 Merb::BootLoader.after_app_loads do

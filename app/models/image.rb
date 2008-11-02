@@ -2,6 +2,7 @@ class Image
   include DataMapper::Resource
   
   belongs_to :whiteboard
+  has n, :used_in_snapshots, :class_name => "Snapshot"
   
   property :id, Serial
   property :taken_at_guess, DateTime
