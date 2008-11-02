@@ -10,22 +10,9 @@
 <%= link_to 'Snapshot', resource(@whiteboard, @snapshot) %>
 </div>
 
-<%= error_messages_for :snapshot %>
+<%= error_messages_for @snapshot %>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, @snapshot)) do %>
-  <!-- TODO: use date/time picker -->
-  <%= text_field :taken_at, :label => "Taken At" %>
-  
-  Current Image:
-  <%= image_tag @snapshot.image_url, :class => 'snapshotimage' %>
-  
-  <!-- TODO: use JS to enable/disable controls as appropriate -->
-  <%= radio_button :name => "image_source", :value => "original", :label => "Leave image unchanged", :checked => true %>
-  <%= radio_button :name => "image_source", :value => "upload", :label => "Upload new image" %>
-  <%= file_field :name => "image_upload", :label => "Image" %>
-  <%= radio_button :name => "image_source", :value => "url", :label => "Use image at url" %>
-  <%= text_field :name => "image_url", :label => "URL" %>
-  
-  <%= text_area :body, :label => "Body (you may use Markdown)" %>
+  <%= partial :form, :snapshot => @snapshot %>
   <%= submit "Update" %>
 <% end =%>

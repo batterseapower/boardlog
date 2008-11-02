@@ -1,0 +1,16 @@
+<h1>Images controller, new action</h1>
+
+<p>Edit this file in <tt>app/views/images/new.html.erb</tt></p>
+<p>For more information and examples of CRUD views read <a href="http://wiki.merbivore.com/howto/crud_view_example_with_merb_using_erb"> this wiki page</a>
+
+<div class="breadcrumbs">
+<%= link_to 'Whiteboards', resource(:whiteboards) %>
+<%= link_to @whiteboard.name, resource(@whiteboard) %>
+</div>
+
+<%= error_messages_for @image %>
+
+<%= form :action => resource(@whiteboard, :images) do %>
+  <%= file_field :name => "image_upload", :label => "Image (will be resized to #{Boardlog::BOARD_IMAGE_WIDTH} pixels wide by #{Boardlog::BOARD_IMAGE_HEIGHT} pixels across)" %>
+  <%= submit "Upload" %>
+<% end =%>

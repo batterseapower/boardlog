@@ -13,8 +13,12 @@ module Merb
       link_to user.name, resource(user)
     end
 
+    def link_to_image(image)
+      link_to image_tag(image.url), url(:whiteboard_image, image.whiteboard, image)
+    end
+
     def link_to_snapshot(snapshot)
-      link_to Boardlog::DateTime.unparse(snapshot.taken_at), url(:whiteboard_snapshot, snapshot.whiteboard, snapshot)
+      link_to Boardlog::Format.date_time(snapshot.taken_at), url(:whiteboard_snapshot, snapshot.whiteboard, snapshot)
     end
 
   end

@@ -1,0 +1,4 @@
+module Boardlog
+  BOARD_IMAGE_WIDTH = 800
+  BOARD_IMAGE_HEIGHT = 600
+end

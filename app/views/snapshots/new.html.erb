@@ -6,20 +6,12 @@
 <div class="breadcrumbs">
 <%= link_to 'Whiteboards', resource(:whiteboards) %>
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
+<%= link_to 'Snapshots', resource(@whiteboard, :snapshots) %>
 </div>
 
-<%= error_messages_for :snapshot %>
+<%= error_messages_for @snapshot %>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, :snapshots)) do %>
-  <!-- TODO: use date/time picker -->
-  <%= text_field :taken_at, :label => "Taken At" %>
-  
-  <!-- TODO: use JS to enable/disable controls as appropriate -->
-  <%= radio_button :name => "image_source", :value => "upload", :label => "Upload new image", :checked => true %>
-  <%= file_field :name => "image_upload", :label => "Image" %>
-  <%= radio_button :name => "image_source", :value => "url", :label => "Use image at url" %>
-  <%= text_field :name => "image_url", :label => "URL" %>
-  
-  <%= text_area :body, :label => "Body (you may use Markdown)" %>
+  <%= partial :form, :snapshot => @snapshot %>
   <%= submit "Create" %>
 <% end =%>

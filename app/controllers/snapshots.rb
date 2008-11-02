@@ -1,6 +1,7 @@
 class Snapshots < Application
+  include Boardlog::WhiteboardChildResource
+  
   before :ensure_authenticated, :only => [:new, :edit, :create, :update, :destroy]
-  before :setup_whiteboard
   
   # provides :xml, :yaml, :js
 
@@ -41,7 +42,6 @@ class Snapshots < Application
     
     @snapshot = Snapshot.new(snapshot)
     @snapshot.whiteboard = @whiteboard
-    @snapshot.image_url, _always_nil = image_url_from_params(@snapshot)
     if @snapshot.save
       redirect resource(@whiteboard, @snapshot), :message => {:notice => "Snapshot was successfully created"}
     else
@@ -55,9 +55,7 @@ class Snapshots < Application
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
     
-    @snapshot.image_url, old_image_url = image_url_from_params(@snapshot)
-    if @snapshot.update_attributes(snapshot, :taken_at, :body)
-      Boardlog::ImageStore.new("snapshots").try_delete_image old_image_url if old_image_url
+    if @snapshot.update_attributes(snapshot, :taken_at, :use_external_image, :external_image_url, :internal_image, :body)
       redirect resource(@whiteboard, @snapshot)
     else
       display @snapshot, :edit
@@ -77,19 +75,17 @@ class Snapshots < Application
   end
 
   private
-  
-    def setup_whiteboard
-      @whiteboard = Whiteboard.get(params[:whiteboard_id])
-      raise NotFound unless @whiteboard
-    end
     
-    def image_url_from_params(current_snapshot)
-      case params[:image_source]
-        when "original": [current_snapshot.image_url, nil]
-        when "upload": [Boardlog::ImageStore.new("snapshots").store_image(params[:image_upload]), current_snapshot.image_url]
-        when "url": [params[:image_url], current_snapshot.image_url]
-        else nil
-      end
-    end
+    # def image_url_from_params(current_snapshot, snapshot_params)
+    #   current_snapshot.external_image_url, current_snapshot.internal_image, success = case params[:image_source]
+    #     when "external": [snapshot_params[:external_image_url], nil, true]
+    #     when "internal":
+    #       image = Image.first(:id => params[:internal_image_id])
+    #       [nil, image && image.url, true]
+    #     else [nil, nil, false]
+    #   end
+    #   
+    #   return success
+    # end
 
-end # Snapshots
+end
