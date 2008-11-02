@@ -1,24 +1,12 @@
 class Users < Application
+  before :ensure_authenticated, :only => [:edit, :update, :destroy]
+  
+  # provides :xml, :yaml, :js
 
-  # ...and remember, everything returned from an action
-  # goes to the client...
   def index
-    render
-  end
-   
-  def create(user)
-	@user = User.new(user)
-    if @user.save
-      redirect resource(@user), :message => {:notice => "New user was successfully created"}
-    else
-      message[:error] = "User failed to be created"
-      render :new
-    end
-  end
-   
-  def new
-  	@user = User.new
-  	display @user
+    @users = User.all
+    
+    display @users
   end
   
   def show(id)
@@ -27,14 +15,55 @@ class Users < Application
     
     display @user
   end
-  
-  def edit
+   
+  def new
+    only_provides :html
+    
+    @user = User.new
+    display @user
   end
   
-  def update
+  def edit(id)
+    only_provides :html
+    @user = User.get(id)
+    raise NotFound unless @user
+    check_user_is_user
+    
+    display @user
+  end
+   
+  def create(user)
+    @user = User.new(user)
+    if @user.save
+      redirect resource(@user), :message => {:notice => "New user was successfully created"}
+    else
+      message[:error] = "User failed to be created"
+      render :new
+    end
   end
   
-  def destroy
+  def update(id, user)
+    @user = User.get(id)
+    raise NotFound unless @user
+    check_user_is_user
+    
+    if @user.update_attributes(user, :name, :email, :password)
+       redirect resource(@user)
+    else
+      display @user, :edit
+    end
+  end
+
+  def destroy(id)
+    @user = User.get(id)
+    raise NotFound unless @user
+    check_user_is_user
+    
+    if @user.destroy
+      redirect resource(:users)
+    else
+      raise InternalServerError
+    end
   end
   
 end

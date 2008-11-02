@@ -6,7 +6,7 @@ DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('users',2);
 INSERT INTO "sqlite_sequence" VALUES('whiteboards',1);
 --CREATE TABLE "whiteboards" ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "name" VARCHAR(50));
-INSERT INTO "whiteboards" VALUES(1,'FC13');
+INSERT INTO "whiteboards" VALUES(1,NULL,'FC13',1);
 --CREATE TABLE "sessions" ("session_id" VARCHAR(32) NOT NULL, "data" TEXT DEFAULT 'BAh7AA== ', "created_at" DATETIME, PRIMARY KEY("session_id"));
 --CREATE TABLE "users_whiteboards" ("whiteboard_id" INTEGER NOT NULL, "user_id" INTEGER NOT NULL, PRIMARY KEY("whiteboard_id", "user_id"));
 INSERT INTO "users_whiteboards" VALUES(1,1);

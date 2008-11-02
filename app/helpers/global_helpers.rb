@@ -8,6 +8,10 @@ module Merb
     def user_owns_this_whiteboard?(whiteboard)
       whiteboard.owners.include? session.user
     end
+    
+    def link_to_user(user)
+      link_to user.name, resource(user)
+    end
 
   end
 end
