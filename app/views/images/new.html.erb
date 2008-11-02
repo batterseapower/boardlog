@@ -11,6 +11,6 @@
 <%= error_messages_for @image %>
 
 <%= form :action => resource(@whiteboard, :images) do %>
-  <%= file_field :name => "image_upload", :label => "Image (will be resized to #{Boardlog::BOARD_IMAGE_WIDTH} pixels wide by #{Boardlog::BOARD_IMAGE_HEIGHT} pixels across)" %>
+  <%= file_field :name => "image_upload", :label => "Image" %>
   <%= submit "Upload" %>
 <% end =%>

@@ -1,5 +1,4 @@
 require 'ftools'
-require 'gd2'
 
 module Boardlog
   # TODO: generate thumbnails as well?
@@ -7,7 +6,7 @@ module Boardlog
     
     URL_BASE = '' / 'uploads' / 'images'
     ABSOLUTE_PATH_BASE = Merb.root / 'public' / 'uploads' / 'images'
-    ACCEPTABLE_FORMATS = ["jpg", "png", "gif"]
+    ACCEPTABLE_FORMATS = ["jpg", "jpeg", "png", "gif"]
     
     def self.store_image(image)
       # Create host directory
@@ -54,10 +53,7 @@ module Boardlog
       end
       
       # Resize the image we were supplied with and save that in the final location
-      GD2::Image.import(image[:tempfile].path, :format => guessed_format) do |image|
-        image.resize!(BOARD_IMAGE_WIDTH, BOARD_IMAGE_HEIGHT, :resample => true)
-        image.export(path)
-      end
+      Images.resize_to_constraints(BOARD_IMAGE_WIDTH, BOARD_IMAGE_HEIGHT, image[:tempfile].path, path, :format => guessed_format)
       
       # Construct a URL relative to HTTPROOT for the caller
       filename
