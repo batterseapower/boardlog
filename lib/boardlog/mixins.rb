@@ -10,7 +10,7 @@ module Boardlog
     
       def setup_whiteboard
         @whiteboard = Whiteboard.get(params[:whiteboard_id])
-        raise NotFound unless @whiteboard
+        raise Merb::ControllerExceptions::NotFound unless @whiteboard
       end
   end
   

@@ -11,6 +11,15 @@
 <%= error_messages_for @image %>
 
 <%= form :action => resource(@whiteboard, :images) do %>
-  <%= file_field :name => "image_upload", :label => "Image" %>
-  <%= submit "Upload" %>
+  <% if !@image.new_record? %>
+    <%= radio_button :name => "image_source", :value => "existing", :label => "This image", :checked => true %>
+    <%= hidden_field :name => "existing_image_id", :value => @image.id %>
+    <%= image_tag @image.url %>
+  <% end %>
+  <%= radio_button :name => "image_source", :value => "external", :label => "External image", :checked => (@image.is_undecided? || @image.is_external?) && @image.new_record? %>
+  <%= text_field :name => "external_image_url", :value => @image.is_external? ? @image.location : nil, :label => "URL" %>
+  <%= radio_button :name => "image_source", :value => "upload", :label => "Upload new image", :checked => @image.is_uploaded? && @image.new_record? %>
+  <%= file_field :name => "upload_image_file", :label => "Image location" %>
+  <%= submit "Preview" %>
+  <%= submit "Next" %>
 <% end =%>

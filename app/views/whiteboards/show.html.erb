@@ -23,6 +23,6 @@
 
 <h4>Recent Snapshots<h4>
 <div>
-<%= partial :snapshot_summary, :with => @snapshots, :as => :snapshot %>
+<%= partial "shared/snapshot_summary", :with => @snapshots, :as => :snapshot %>
 </div>
 <%= link_to 'Show All', resource(@whiteboard, :snapshots) %>

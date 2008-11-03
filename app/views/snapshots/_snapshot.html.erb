@@ -2,7 +2,7 @@
   <div class="snapshotdate">
     <%= link_to_snapshot snapshot %>
   </div>
-  <%= image_tag snapshot.image_url, :class => 'snapshotimage' %>
+  <%= image_tag snapshot.image.url, :class => 'snapshotimage' %>
   <div class="snapshotbody">
     <%= snapshot.body_html %>
   </div>

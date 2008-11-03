@@ -21,22 +21,42 @@ class Images < Application
   def new
     only_provides :html
     
-    @image = Image.new
+    # This parameter is supplied by the snapshot "new" form, when the user chooses to change their picture
+    if params[:existing_image_id]
+      @image = Image.get(params[:existing_image_id])
+      raise NotFound unless @image && @image.whiteboard == @whiteboard
+    else
+      @image = Image.new
+      @image.whiteboard = @whiteboard
+    end
     display @image
   end
   
   def create
-    @image = Image.new
-    @image.whiteboard = @whiteboard
-    @image.taken_at_guess = Boardlog::Images.guess_image_date_time(params[:image_upload][:tempfile].path)
-    begin
-      @image.filename = Boardlog::ImageStore.store_image(params[:image_upload])
-    rescue Boardlog::UnacceptableImageFormat => uif
-      @image.errors.add(:general, "The image was in #{uif.format} format, but we expected one of #{Boardlog::Format.alternatives_list(Boardlog::ImageStore::ACCEPTABLE_FORMATS)}")
+    case params[:image_source]
+      when "existing":
+        @image = Image.get(params[:existing_image_id], :whiteboard => @whiteboard)
+        raise NotFound unless @image
+      when "external":
+        @image = ExternalImage.new(:location => params[:external_image_url])
+      when "upload":
+        @image = UploadedImage.new
+        begin
+          @image.location = Boardlog::ImageStore.store_image(params[:upload_image_file])
+          @image.taken_at_guess = Boardlog::Images.guess_image_date_time(params[:upload_image_file][:tempfile].path)
+        rescue Boardlog::UnacceptableImageFormat => uif
+          @image.errors.add(:general, "The image was in #{uif.format} format, but we expected one of #{Boardlog::Format.alternatives_list(Boardlog::ImageStore::ACCEPTABLE_FORMATS)}")
+        end
+      else raise BadRequest
     end
+
+    @image.whiteboard = @whiteboard
     if @image.errors.empty? && @image.save
-      # TODO: redirect to alternative address
-      redirect resource(@whiteboard, @image), :message => {:notice => "Image was successfully created"}
+      if params[:submit] != "Preview"
+        redirect resource(@whiteboard, :snapshots, :new, :image_id => @image.id), :message => {:notice => "Image was successfully created"}
+      else
+        render :new
+      end
     else
       message[:error] = "Image failed to be created"
       render :new
@@ -47,7 +67,9 @@ class Images < Application
     @image = Image.get(id)
     raise NotFound unless @image && @image.whiteboard == @whiteboard
     
-    if @image.destroy
+    if @image.used_in_snapshot
+      display @image
+    elsif @image.destroy
       redirect resource(@whiteboard, :images)
     else
       raise InternalServerError

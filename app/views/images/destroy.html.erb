@@ -1,0 +1,5 @@
+The image cannot be deleted because it is still in use by the following snapshot. Either delete the
+snapshot or change their image to be something else, and then
+<%= link_to "retry the delete", resource(@image.whiteboard, @image, :delete) %>.
+
+<%= partial "shared/snapshot_summary", :snapshot => @image.used_in_snapshot %>

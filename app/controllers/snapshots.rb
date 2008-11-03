@@ -23,7 +23,12 @@ class Snapshots < Application
     only_provides :html
     check_user_owns_whiteboard
     
+    image = Image.get(params[:image_id])
+    return redirect_to_image_chooser if should_redirect_for(image)
+    
     @snapshot = Snapshot.new
+    @snapshot.whiteboard = @whiteboard
+    @snapshot.image = image
     @snapshot.taken_at = Time.now
     display @snapshot
   end
@@ -40,8 +45,12 @@ class Snapshots < Application
   def create(snapshot)
     check_user_owns_whiteboard
     
+    image = Image.get(params[:image_id])
+    return redirect_to_image_chooser if should_redirect_for(image)
+    
     @snapshot = Snapshot.new(snapshot)
     @snapshot.whiteboard = @whiteboard
+    @snapshot.image = image
     if @snapshot.save
       redirect resource(@whiteboard, @snapshot), :message => {:notice => "Snapshot was successfully created"}
     else
@@ -55,6 +64,10 @@ class Snapshots < Application
     @snapshot = Snapshot.get(id)
     raise NotFound unless @snapshot && @snapshot.whiteboard == @whiteboard
     
+    image = Image.get(params[:image_id])
+    return redirect_to_image_chooser if should_redirect_for(image)
+
+    @snapshot.image = image
     if @snapshot.update_attributes(snapshot, :taken_at, :use_external_image, :external_image_url, :internal_image, :body)
       redirect resource(@whiteboard, @snapshot)
     else
@@ -73,19 +86,18 @@ class Snapshots < Application
       raise InternalServerError
     end
   end
-
+  
   private
-    
-    # def image_url_from_params(current_snapshot, snapshot_params)
-    #   current_snapshot.external_image_url, current_snapshot.internal_image, success = case params[:image_source]
-    #     when "external": [snapshot_params[:external_image_url], nil, true]
-    #     when "internal":
-    #       image = Image.first(:id => params[:internal_image_id])
-    #       [nil, image && image.url, true]
-    #     else [nil, nil, false]
-    #   end
-    #   
-    #   return success
-    # end
+  
+    # The "new" action expects the image_id parameter in order to set up a new snapshot. If it is missing
+    # the user is redirected to the image resource "new" action, which redirects back here later on
+  
+    def should_redirect_for(image)
+      !image || image.whiteboard != @whiteboard
+    end
+  
+    def redirect_to_image_chooser
+      redirect resource(@whiteboard, :images, :new)
+    end
 
 end
