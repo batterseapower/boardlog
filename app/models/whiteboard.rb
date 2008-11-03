@@ -8,6 +8,6 @@ class Whiteboard
   
   property :id, Serial
   property :name, String, :nullable => false, :length => (1..50)
-  property :public, Boolean, :nullable => false
+  property :public, Boolean, :nullable => false, :default => true
 
 end

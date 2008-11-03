@@ -7,7 +7,7 @@ class Snapshot
   property :id, Serial
   property :taken_at, DateTime, :nullable => false
   property :body, Text, :nullable => false
-  property :public, Boolean, :nullable => false
+  property :public, Boolean, :nullable => false, :default => true
 
   def previous
     whiteboard.snapshots.first(:taken_at.lt => taken_at)

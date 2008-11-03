@@ -7,7 +7,7 @@ class Group
 	  
   property :id, Serial
   property :name, String, :nullable => false, :length => (1..64)
-  property :public, Boolean, :nullable => false
+  property :public, Boolean, :nullable => false, :default => true
   property :location, String, :nullable => false, :length => (1..128)
 
 
@@ -21,10 +21,7 @@ class Group
 		
 	def request_membership(user)
 		if !self.has_member?(user) and !self.has_member_request?(user)
-  		req = MembershipRequest.new
-  		req.user = user
-  		req.group = self
-  		req.save
+  		MembershipRequest.new(:user => user, :group => self).save
   	end
 	end
 	

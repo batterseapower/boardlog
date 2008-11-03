@@ -7,5 +7,4 @@ class MembershipRequest
   property :id, Serial
   property :denied, Boolean, :nullable => false, :default => false
 
-
 end
