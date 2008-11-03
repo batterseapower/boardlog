@@ -13,6 +13,7 @@ class User
   
   has n, :owned_whiteboards, :through => Resource, :class_name => 'Whiteboard'
   has n, :groups, :through => Resource
+  has n, :membership_requests
   
   property :id, Serial
   property :name, String, :length => (1..50), :unique => true
@@ -23,5 +24,6 @@ class User
   def gravatar_url(size)
     gravatar_url_for_email(email, :rating => 'PG', :size => size)
   end
+ 
   
 end

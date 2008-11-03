@@ -27,6 +27,15 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
+  resources :membership_requests
+
+	match('/groups/accept_request').to(:controller => 'groups', :action => 'accept_request')
+	match('/groups/reject_request').to(:controller => 'groups', :action => 'reject_request')
+	
+	resources :groups do |group|
+	end
+
+
   # RESTful routes
   resources :whiteboards do |whiteboards|
     whiteboards.resources :images

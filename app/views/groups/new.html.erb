@@ -1,0 +1,12 @@
+<div align='center'>
+<h3>Create a new group</h3>
+
+<%= form_for(@group, :action => resource(:groups)) do %>
+	<table>
+	<tr><td>Name</td><td><%= text_field :name %></td><td class='description'>Enter a name to identify your group.</td></tr>
+	<tr><td>Location</td><td><%= text_field :location %></td><td class='description'>Location of your group e.g. London, Lab, etc.</td></tr>
+	<tr><td>Public</td><td><%= check_box :public %></td><td class='description'>Public groups can be viewed by anyone.</td></tr>
+	<tr><td></td><td align='left'><%= submit "Create group" %></td></tr>
+	</table>
+<% end =%>
+</div>

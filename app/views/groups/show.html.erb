@@ -1,0 +1,43 @@
+<div align='center'>
+<table cellspacing='10' cellpadding='10'>
+<tr>
+<td valign='top'>
+	<h3><%= @group.name %></h3>
+	<table>
+	<tr><td>Location: </td><td><%= @group.location %></td></tr>
+	<tr><td>Whiteboards: </td><td><%= @group.whiteboards.length %></td></tr>
+	<tr><td>Members: </td><td><%= @group.members.length %></td></tr>
+	</table><br />
+	<div class='members_box'>
+		<%= partial(:user, :with => @group.members, :as => :user) %>
+	</div>
+	<% if session.user and @group.has_member?(session.user) and @group.get_current_membership_requests!=[] %>
+		<br /><br />
+		<b>Pending membership requests:</b><br />
+		<ul>
+			<%= partial(:request, :with => @group.membership_requests, :as => :request) %>
+		</ul>
+	<% end %>
+	<% if session.user and !@group.has_member?(session.user) %>
+		<br />
+		<% request = @group.get_membership_request(session.user) %>
+		<% if request %>
+				<% if request.denied %>
+					<span style='color:#800'>[You're request for membership was denied]</span>
+				<% else %>
+					<span style='color:#008'>[You're request for membership is pending]</span>
+				<% end %>
+		<% else %>
+				<%= link_to "[Request membership to this group]", url(:controller => "groups", :action => "request_membership", :id => @group.id) %>
+		<% end %>
+		<br /><Br />
+	<% end %>
+</td>
+<td valign='top' style='border-left:solid 1px #ccc;padding-left:15px;'>
+	<b>Whiteboards belonging to <%= @group.name %></b>
+	<ul>
+	</ul>
+</td>
+</tr>
+</table>
+</div>

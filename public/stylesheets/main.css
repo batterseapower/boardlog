@@ -5,7 +5,7 @@ body, html {
 	font-size:0.9em;
 }
 
-#main_container, #top_container {
+#main_container, #top_container, #controls_container {
 	margin:0px;
 	padding:0px;
 }
@@ -13,19 +13,32 @@ body, html {
 #top_container {
 	background-color:#e2ece2;
 	border-bottom:solid #ccc 1px;
-	padding:0px;
+}
+
+#top_inner_container {
+	width:800px;
+	height:50px;
+}
+
+#controls_container a {
+	text-decoration:none;
+	color:#1f495c;
+}
+
+#controls_container a:hover {
+	text-decoration:underline;
 }
 
 #bottom_container {
 	clear:both;
 	border-top:solid #ccc 1px;
-	padding-top:30px;
+	padding-top:10px;
 }
 
 #welcome_banner {
 	margin:0px;
 	padding:0px;
-	border:0px;
+	border:none;
 }
 
 #content_container {
@@ -55,15 +68,16 @@ body, html {
 	float:left;
 	border:solid 1px #ccc;
 	padding:10px;
-	clear:both;
+	clear:none;
 	margin:10px;
+	text-align:left;
 }
 
 h3 {
 	font-family:Lucida Sans Unicode,Verdana, Sans;
-	font-size:1.3em;
+	font-size: 16px;
 	font-variant:small-caps;
-	color:#3c8541;
+	color: #4d9b12;
 	margin:5px;
 }
 
@@ -80,19 +94,60 @@ h3 {
 	width:300px;
 }
 
-#controls_container {
-	padding:10px;
-	clear:both;
-}
-
 a {
 	color:#5088a0;
+	background:none;
 }
 
 a:hover {
 	text-decoration:none;
+	background:none;
+	color:#4d9b12;
 }
 
 td {
 	padding:3px;
 }
+
+a.boardlink {
+	font-style:none;
+	background:none;
+}
+
+table.table_container {
+	padding:0px;
+	margin:0px;
+}
+
+table.table_container td {
+	padding:0px;
+	margin:0px;
+}
+
+.description {
+	font-size:8pt;
+	color:#888;
+}
+
+
+.members_box {
+	width:250px;
+	height:80px;
+	border:solid 1px #ccc;
+	overflow:auto;
+	padding:10px;
+}
+
+.user_tag {
+	padding:2px;
+	text-align:center;
+	width:48px;
+	clear:none;
+	float:left;
+}
+
+.user_tag img {
+	margin:0px;
+	padding:0px;
+}
+

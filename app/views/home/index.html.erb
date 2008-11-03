@@ -21,35 +21,41 @@
 			<h3>Collaboration</h3>
 			We understand that people work in offices, in groups, or alone. You can start a Boardlog account for just yourself, or for a group of people. You can even have multiple boardlogs within a group.
 			</div>
-			<div class='info_box'>
-			<h3>Login or <%= link_to "Signup", "/users/new" %></h3>
-			<form action="/login" method="POST" accept-charset="utf-8">				
-			<input type="hidden" name="_method" value="PUT" />
-			<table>
-			<tr>
-				<td>Email:</td>
-			  	<td><input type="text" name="email" value="" id="email"></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type="password" name="password" value="" id="password"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" name="Submit" value="Log In" id="Submit"></td>
-			</tr>
-			</table>
-			</form>
-			<br /><br />
-			</div>
+			<% unless session.user %>
+				<div class='info_box'>
+				<h3>Login or <%= link_to "Signup", "/users/new" %></h3>
+				<form action="/login" method="POST" accept-charset="utf-8">				
+				<input type="hidden" name="_method" value="PUT" />
+				<table>
+				<tr>
+					<td>Email:</td>
+				  	<td><input type="text" name="email" value="" id="email"></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" name="password" value="" id="password"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" name="Submit" value="Log In" id="Submit"></td>
+				</tr>
+				</table>
+				</form>
+				<br /><br />
+				</div>
+				<% end %>
 			<div align='center'>
 				<div class='non_constrained_box'>
-				<h3>Boards on Boardlog.</h3><br />
+				<h3><%= link_to "Boards", url(:whiteboards) %> on Boardlog.</h3>
+					<ul>
 					<%= partial("whiteboard", :with => @whiteboards) %>
+					</ul>
 				</div>
 				<div class='non_constrained_box'>
-				<h3>Groups on Baoardlog.</h3><br />
+				<h3><%= link_to "Groups", url(:groups) %> on Baoardlog.</h3>
+					<ul>
 					<%= partial("group", :with => @groups) %>
+					</ul>
 				</div>
 			</div>
 	 	</div>

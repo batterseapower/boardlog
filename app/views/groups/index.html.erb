@@ -1,0 +1,24 @@
+<div align='center'>
+<table cellspacing='6' cellpadding='10'>
+<tr>
+<% if session.user %>
+<td valign='top'>
+	<h3>My Groups</h3>
+	<%= link_to "<b>Create new group</b>", url(:new_group) %><br /><br />
+	<%= partial :group, :with => @personal_groups, :as => :group %>
+	<% if @requested_groups!=[] %>
+		<br /><br />
+		<h3>Membership-requested groups</h3>
+		<%= partial :group, :with => @requested_groups, :as => :group %>		
+	<% end %>
+</td>
+<% end %>
+<td valign='top' style='border-left:solid 1px #ccc;'>
+	<h3>Public Groups</h3>
+	<ul>
+		<%= partial :group_small, :with => @groups, :as => :group %>
+	</ul>
+</td>
+</tr>
+</table>
+</div>

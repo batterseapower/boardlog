@@ -12,14 +12,28 @@
 <body>
 <div align='center' id='main_container'>
 	<div align='center' id='top_container'>
-	<a href='front.html'><img src='/images/top.png' id='welcome_banner' /></a>
+		<div id='top_inner_container' align='center'>
+			<table class='table_container'><tr><td valign='center' id='controls_container'>
+			<%= link_to "<b>Home</b>", '/home/index', :class => 'boardlink' %> |
+			<%= link_to "Groups", url(:groups) %> | 
+			<% if session.user %>
+			  	<!-- logged in user menu -->
+			   <%= session.user.name %> - <%= link_to 'Logout', '/logout' unless session.user.nil? %>
+			<% else %>
+				<%= link_to "Signup", "/users/new" %> |
+				<%= link_to "Login", "/login" %>
+			<% end %>
+			</td><td style='padding-left:30px;'>
+				<%= link_to "<img src='/images/top.png' id='welcome_banner'/>", '/home/index', :class => 'boardlink' %>
+			</td></tr></table>
+		</div>
 	</div>
 	<div id='content_container' style='width:100%'>
 		<div id='content_inner_container' style='padding:15px;'>
-    	<%#= message[:notice] %>
+    	<%= message[:notice] %>
 
     	<%= catch_content :for_layout %>
-	    <%= link_to 'Logout', '/logout' %>
+
 	 	</div>
 	</div>
 	<div id='bottom_container' align='center'>
