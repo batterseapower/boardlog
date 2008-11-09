@@ -1,4 +1,7 @@
 <li><%= request.user.name %> -	
 	[<%= link_to "Accept", url(:controller => :groups, :action => :accept_request, :group_id => request.group_id, :user_id => request.user_id), :onclick => "return confirm('Are you sure you want to accept this request for membership by "+request.user.name+"?');" %>]
 	[<%= link_to "Reject", url(:controller => :groups, :action => :reject_request, :group_id => request.group_id, :user_id => request.user_id), 
-	:onclick => "return confirm('Are you sure you want to reject this request for membership by "+request.user.name+"?');" %>]</li>
+	:onclick => "return confirm('Are you sure you want to reject this request for membership by "+request.user.name+"?');" %>]
+		[<%= link_to "Block", url(:controller => :groups, :action => :block_request, :group_id => request.group_id, :user_id => request.user_id), 
+	:onclick => "return confirm('Are you sure you want to permanently block this user "+request.user.name+" from requesting membership?');" %>]
+	</li>

@@ -23,7 +23,7 @@
 		<% request = @group.get_membership_request(session.user) %>
 		<% if request %>
 				<% if request.denied %>
-					<span style='color:#800'>[You're request for membership was denied]</span>
+					<span style='color:#800'>[You're request for membership was permanently blocked]</span>
 				<% else %>
 					<span style='color:#008'>[You're request for membership is pending]</span>
 				<% end %>
@@ -35,8 +35,9 @@
 </td>
 <td valign='top' style='border-left:solid 1px #ccc;padding-left:15px;'>
 	<b>Whiteboards belonging to <%= @group.name %></b>
+	<br />
 	<ul>
-	</ul>
+	<%= partial(:whiteboard, :with => @group.whiteboards, :as => :whiteboard) %>
 </td>
 </tr>
 </table>

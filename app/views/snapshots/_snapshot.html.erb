@@ -1,9 +1,20 @@
-<p class="snapshot">
-  <div class="snapshotdate">
-    <%= link_to_snapshot snapshot %>
-  </div>
-  <%= image_tag snapshot.image.url, :class => 'snapshotimage' %>
-  <div class="snapshotbody">
-    <%= snapshot.body_html %>
-  </div>
-</p>
+<table>
+	<tr><td>
+		<%= image_tag snapshot.image.url, :class => 'snapshotimage' %>
+	</td>
+	<td valign='top'>
+		<%= link_to "<b>Link to this snapshot</b>", resource(@whiteboard, snapshot) %><br /><br />
+		<table>
+		<tr><td>Taken At:</td><td><%= link_to_snapshot snapshot %></td></tr>
+		<tr><td valign='top'>Description:</td>
+		<td><%= snapshot.body_html %>
+		</td></tr>
+		<% if user_owns_whiteboard? then %>
+		<tr><td>Owner Controls:</td>
+			<td><%= link_to 'Edit', resource(@whiteboard, @snapshot, :edit) %> | 
+		  <%= link_to 'Delete', resource(@whiteboard, @snapshot, :delete), :onclick => "return confirm('Are you sure you want to delete this snapshot');" %>
+			</td></tr>
+		<% end %>
+	  </table>
+	</td></tr>
+</table>

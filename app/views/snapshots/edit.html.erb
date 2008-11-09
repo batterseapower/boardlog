@@ -1,18 +1,15 @@
-<h1>Snapshots controller, edit action</h1>
-
-<p>Edit this file in <tt>app/views/snapshots/edit.html.erb</tt></p>
-<p>For more information and examples of CRUD views read <a href="http://wiki.merbivore.com/howto/crud_view_example_with_merb_using_erb"> this wiki page</a>
-
 <div class="breadcrumbs">
-<%= link_to 'Whiteboards', resource(:whiteboards) %>
-<%= link_to @whiteboard.name, resource(@whiteboard) %>
-<%= link_to 'Snapshots', resource(@whiteboard, :snapshots) %>
+<%= link_to 'Whiteboards', resource(:whiteboards) %> ->
+<%= link_to @whiteboard.name, resource(@whiteboard) %> ->
+<%= link_to 'Snapshots', resource(@whiteboard, :snapshots) %> ->
 <%= link_to 'Snapshot', resource(@whiteboard, @snapshot) %>
 </div>
 
 <%= error_messages_for @snapshot %>
 
 <%= form_for (@snapshot, :action => resource(@whiteboard, @snapshot)) do %>
+	<table width='100%'>
   <%= partial :form, :snapshot => @snapshot %>
   <%= submit "Update" %>
+  </td></tr></table>
 <% end =%>

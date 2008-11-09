@@ -50,6 +50,8 @@ body, html {
 
 #content_inner_container {
 	padding:5px;
+	margin-left:10px;
+	margin-right:10px;
 	font-family:Lucida Sans Unicode,Verdana, Sans;
 	font-size:0.9em;
 }
@@ -151,3 +153,25 @@ table.table_container td {
 	padding:0px;
 }
 
+.top_box {
+	border:solid 1px #ccc;
+	padding:0px;
+	padding-left:15px;
+	padding-right:15px;
+	margin:0px;
+}
+
+.top_box table {
+	margin:0px;
+	padding:0px;
+}
+
+.top_box td {
+	padding:0px;
+	margin:0px;
+}
+
+.top_box h1 {
+	margin:0px;
+	padding:0px;
+}

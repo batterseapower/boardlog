@@ -1,9 +1,16 @@
 <!-- TODO: use date/time picker -->
-<%= text_field :taken_at, :label => "Taken At" %>
 
-<%= hidden_field :name => :image_id, :value => snapshot.image.id %>
+<tr>
+<td>
 <%= image_tag snapshot.image.url, :class => 'snapshotimage' %>
-<%= link_to "Change image", url(:new_whiteboard_image, snapshot.whiteboard, :existing_image_id => snapshot.image.id) %>
+<%= hidden_field :name => :image_id, :value => snapshot.image.id %>
+</td>
+<td valign='top'>
+<table>
+<tr><td colspan='2'><%= link_to "Change image", url(:new_whiteboard_image, snapshot.whiteboard, :existing_image_id => snapshot.image.id) %></td></tr>
+<tr><td>Taken At:</td><td><%= text_field :taken_at %></td></tr>
+<tr><td>Make Public:</td><td><%= check_box :public %></td></tr>
+<tr><td valign='top'>Description:</td><td>
+<%= text_area :body,  :cols => 30, :rows => 20, :label => "(you may use Markdown)" %>
+</td></tr></table>
 
-<%= text_area :body, :label => "Body (you may use Markdown)" %>
-<%= check_box :public, :label => "Make Public" %>

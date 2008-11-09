@@ -4,8 +4,8 @@
 <% if session.user %>
 <td valign='top'>
 	<h3>My Groups</h3>
-	<%= link_to "<b>Create new group</b>", url(:new_group) %><br /><br />
-	<%= partial :group, :with => @personal_groups, :as => :group %>
+	<%= link_to "<b>Create new group</b>", resource(:groups, :new) %><br /><br />
+	<%= partial :group, :with => session.user.groups, :as => :group %>
 	<% if @requested_groups!=[] %>
 		<br /><br />
 		<h3>Membership-requested groups</h3>

@@ -29,11 +29,19 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
   resources :membership_requests
 
+	match('/groups/block_request').to(:controller => 'groups', :action => 'block_request')
 	match('/groups/accept_request').to(:controller => 'groups', :action => 'accept_request')
 	match('/groups/reject_request').to(:controller => 'groups', :action => 'reject_request')
+	match('/groups/request_membership').to(:controller => 'groups', :action => 'request_membership')
 	
-	resources :groups do |group|
-	end
+
+	match('/whiteboards/block_request').to(:controller => 'whiteboards', :action => 'block_request')
+	match('/whiteboards/accept_request').to(:controller => 'whiteboards', :action => 'accept_request')
+	match('/whiteboards/reject_request').to(:controller => 'whiteboards', :action => 'reject_request')
+	match('/whiteboards/request_ownership').to(:controller => 'whiteboards', :action => 'request_ownership')
+	
+	
+	resources :groups
 
 
   # RESTful routes

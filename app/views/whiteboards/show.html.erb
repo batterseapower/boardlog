@@ -1,28 +1,7 @@
-<h1>Whiteboards controller, show action</h1>
-
-<p>Edit this file in <tt>app/views/whiteboards/show.html.erb</tt></p>
-<p>For more information and examples of CRUD views read <a href="http://wiki.merbivore.com/howto/crud_view_example_with_merb_using_erb"> this wiki page</a>
-
-<div class="breadcrumbs">
-<%= link_to 'Whiteboards', resource(:whiteboards) %>
-</div>
-
-<h3><%=h @whiteboard.name %></h3>
-<b>by:</b>
-
-<% @whiteboard.owners.each do |owner| %>
-  <%=h owner.name %>
-<% end %>
-
-<% if user_owns_whiteboard? then %>
-  <div>
-  <%= link_to 'Edit', resource(@whiteboard, :edit) %>
-  <%= delete_button(@whiteboard, "Delete #{@whiteboard.name}") %>
-  </div>
-<% end %>
+<%= partial "shared/whiteboard_header", :with => @whiteboard, :as => :whiteboard %>
 
 <h4>Recent Snapshots<h4>
 <div>
-<%= partial "shared/snapshot_summary", :with => @snapshots, :as => :snapshot %>
+<%= partial "shared/snapshot_summary", :with => @whiteboard.snapshots(:limit => 10), :as => :snapshot %>
 </div>
-<%= link_to 'Show All', resource(@whiteboard, :snapshots) %>
+<%= link_to 'Show All', resource(@whiteboard, :snapshots) %>	  

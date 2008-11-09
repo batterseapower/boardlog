@@ -1,12 +1,11 @@
 class Groups < Application
   # provides :xml, :yaml, :js
   before :ensure_authenticated, :only => [:edit, :update, :destroy, :new, :create, :request_membership, 
-  	:accept_request, :reject_request]
+  	:accept_request, :reject_request, :block_request]
 
   def index
     @groups = Group.all(:public => true, :order => [:name.asc])
     if session.user
-    	@personal_groups = session.user.groups
     	# turn this into a join
     	@requested_groups = session.user.membership_requests.map { |x| x.group }
     end
@@ -22,7 +21,6 @@ class Groups < Application
   end
   
   def accept_request()
-  
   	@group = Group.get(params[:group_id])
   	raise NotFound unless @group
   	user = User.get(params[:user_id])
@@ -39,7 +37,20 @@ class Groups < Application
   end
   
   def reject_request()
+  	@group = Group.get(params[:group_id])
+  	raise NotFound unless @group
+  	user = User.get(params[:user_id])
+  	raise NotFound unless user
+  	
+  	req = MembershipRequest.first(:user_id => user.id, :group_id => @group.id)
+  	raise NotFound unless req
+
+  	req.destroy 	
+  	
+  	render :show
+  end
   
+  def block_request()
   	@group = Group.get(params[:group_id])
   	raise NotFound unless @group
   	user = User.get(params[:user_id])

@@ -1,25 +1,35 @@
-<h1>Images controller, new action</h1>
-
-<p>Edit this file in <tt>app/views/images/new.html.erb</tt></p>
-<p>For more information and examples of CRUD views read <a href="http://wiki.merbivore.com/howto/crud_view_example_with_merb_using_erb"> this wiki page</a>
-
 <div class="breadcrumbs">
-<%= link_to 'Whiteboards', resource(:whiteboards) %>
+<%= link_to 'Whiteboards', resource(:whiteboards) %> ->
 <%= link_to @whiteboard.name, resource(@whiteboard) %>
 </div>
 
+
+<h3>Upload new whiteboard image</h3>
+
 <%= error_messages_for @image %>
 
+<table cellspacing='2'>
 <%= form :action => resource(@whiteboard, :images) do %>
   <% if !@image.new_record? %>
-    <%= radio_button :name => "image_source", :value => "existing", :label => "This image", :checked => true %>
+  	<tr><td>This image:</td>
+  	<td><%= radio_button :name => "image_source", :value => "existing", :checked => true %></td></tr>
+  	<tr><td></td><td>
     <%= hidden_field :name => "existing_image_id", :value => @image.id %>
     <%= image_tag @image.url %>
+    </td></tr>
   <% end %>
-  <%= radio_button :name => "image_source", :value => "external", :label => "External image", :checked => (@image.is_undecided? || @image.is_external?) && @image.new_record? %>
-  <%= text_field :name => "external_image_url", :value => @image.is_external? ? @image.location : nil, :label => "URL" %>
-  <%= radio_button :name => "image_source", :value => "upload", :label => "Upload new image", :checked => @image.is_uploaded? && @image.new_record? %>
-  <%= file_field :name => "upload_image_file", :label => "Image location" %>
-  <%= submit "Preview" %>
-  <%= submit "Next" %>
+  <tr><td>
+  <%= radio_button :name => "image_source", :value => "external", :label => "External image", :checked => (@image.is_undecided? || @image.is_external?) && @image.new_record? %></td>
+  <td><%= text_field :name => "external_image_url", :value => @image.is_external? ? @image.location : nil, :label => "URL: &nbsp;" %>
+  </td></tr>
+  <tr><td><%= radio_button :name => "image_source", :value => "upload", :label => "Upload new image", :checked => @image.is_uploaded? && @image.new_record? %></td>
+  <td>
+  <%= file_field :name => "upload_image_file", :label => "Image location: &nbsp;" %>
+  </td>
+  </tr>
+  <tr><td>
+  <%= submit "Ok" %>
+  <%= submit "Continue" %>
+  </td></tr>
 <% end =%>
+</table>

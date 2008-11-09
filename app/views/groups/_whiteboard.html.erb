@@ -1,0 +1,7 @@
+<li><%= link_to whiteboard.name, url(:whiteboard, whiteboard) %><br />
+	<table>
+	<tr><td>Last post:</td><td><%= if whiteboard.snapshots == [] then "Never" else whiteboard.snapshots[0].taken_at end %></td></tr>
+	<tr><td>Posts:</td><td><%= whiteboard.snapshots.length %></td></tr>
+	<tr><td>Contributors:</td><td><%= whiteboard.owners.length %></td></tr>
+	</table>
+</li>

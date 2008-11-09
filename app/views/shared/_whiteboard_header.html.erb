@@ -1,0 +1,42 @@
+<div class='top_box'>
+<table><tr>
+<td>
+<%= link_to "<h1>#{h whiteboard.name}</h1>", resource(whiteboard) %>
+</td>
+<% if whiteboard.group %>
+<td valign='center' style='padding-left:20px;'>
+<h3><b>Group:</b></h3>
+</td>
+<td>
+<h4><%= link_to (h whiteboard.group.name), url(:group, whiteboard.group) %>, <%= h whiteboard.group.location %></h4>
+</td>
+<% end %>
+<td valign='center' style='padding-left:20px;'>
+<h3><b>By:</b></h3>
+</td>
+<td valign='center'>
+<%= partial("shared/user", :with => whiteboard.owners, :as => :user) %>
+</td>
+</tr></table>
+<% if user_owns_whiteboard? then %>
+  <div style='float:right;margin-top:-20px;'>
+  <b>Owner Controls</b>:
+  <b><%= link_to 'New Snapshot', resource(whiteboard, :snapshots, :new) %></b> | 
+  <%= link_to 'Edit Board', resource(whiteboard, :edit) %> | 
+  <%= link_to 'Delete Board', resource(whiteboard, :delete), :onclick => "return confirm('Are you sure you want to delete this whiteboard "+whiteboard.name+"?');"  %>
+  </div>
+<% else %>
+	<div style='float:right;margin-top:-20px;'>
+	<% request = @whiteboard.get_ownership_request(session.user) %>
+	<% if request %>
+			<% if request.denied %>
+				<span style='color:#800'>[You're contributor request was permanently denied]</span>
+			<% else %>
+				<span style='color:#008'>[You're contributor request is pending]</span>
+			<% end %>
+	<% else %>
+		<%= link_to "[Request to be a contributor to this whiteboard]", url(:controller => "whiteboards", :action => "request_ownership", :id => @whiteboard.id) %>
+	<% end %>
+	</div>
+<% end %>
+</div>
