@@ -5,18 +5,20 @@
 <td valign='top'>
 	<h3>My Whiteboards</h3>
 	<%= link_to "<b>Create new whiteboard</b>", resource(:whiteboards, :new) %><br /><br />
-	<%= partial :whiteboard, :with => session.user.owned_whiteboards, :as => :whiteboard %>
+	<%= partial "shared/whiteboard_details", :with => session.user.owned_whiteboards, :as => :whiteboard %>
 	<% if @requested_whiteboards!=[] %>
 		<br /><br />
 		<h3>Ownership-requested whiteboards</h3>
-		<%= partial :whiteboard, :with => @requested_whiteboards, :as => :whiteboard %>
+		<%= partial "shared/whiteboard", :with => @requested_whiteboards, :as => :whiteboard %>
 	<% end %>
 </td>
-<% end %>
 <td valign='top' style='border-left:solid 1px #ccc;'>
+</td>
+<% end %>
+<td valign='top'>
 	<h3>Public Whiteboards</h3>
 	<ul>
-		<%= partial :whiteboard, :with => @whiteboards, :as => :whiteboard %>
+		<%= partial "shared/whiteboard", :with => @whiteboards, :as => :whiteboard %>
 	</ul>
 </td>
 </tr>

@@ -8,6 +8,8 @@
 <%= error_messages_for @whiteboard %>
 
 <%= form_for(@whiteboard, :action => resource(@whiteboard)) do %>
+  <table>
   <%= partial :form, :whiteboard => @whiteboard %>
-  <%= submit "Update" %>
+  <tr><td></td><td><%= submit "Update" %></td></tr>
+  </table>
 <% end =%>

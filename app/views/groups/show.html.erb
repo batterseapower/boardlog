@@ -11,33 +11,35 @@
 	<div class='members_box'>
 		<%= partial(:user, :with => @group.members, :as => :user) %>
 	</div>
-	<% if session.user and @group.has_member?(session.user) and @group.get_current_membership_requests!=[] %>
+	<% if session.user and @group.has_member?(session.user) %><br /><br />
+	  <b>Owner tools:</b>  <%= link_to "Edit group", resource(@group, :edit) %>
 		<br /><br />
-		<b>Pending membership requests:</b><br />
-		<ul>
-			<%= partial(:request, :with => @group.membership_requests, :as => :request) %>
-		</ul>
-	<% end %>
-	<% if session.user and !@group.has_member?(session.user) %>
-		<br />
-		<% request = @group.get_membership_request(session.user) %>
-		<% if request %>
-				<% if request.denied %>
-					<span style='color:#800'>[You're request for membership was permanently blocked]</span>
-				<% else %>
-					<span style='color:#008'>[You're request for membership is pending]</span>
-				<% end %>
-		<% else %>
-				<%= link_to "[Request membership to this group]", url(:controller => "groups", :action => "request_membership", :id => @group.id) %>
-		<% end %>
-		<br /><Br />
+		<% if @group.get_current_membership_requests!=[] %>
+		  <b>Pending membership requests:</b><br />
+		  <ul>
+			  <%= partial(:request, :with => @group.membership_requests, :as => :request) %>
+		  </ul>
+	  <% end %>
+	  <% if session.user and !@group.has_member?(session.user) %>
+		  <br />
+		  <% request = @group.get_membership_request(session.user) %>
+		  <% if request %>
+				  <% if request.denied %>
+					  <span style='color:#800'>[You're request for membership was permanently blocked]</span>
+				  <% else %>
+					  <span style='color:#008'>[You're request for membership is pending]</span>
+				  <% end %>
+		  <% else %>
+				  <%= link_to "[Request membership to this group]", url(:controller => "groups", :action => "request_membership", :id => @group.id) %>
+		  <% end %>
+  	<% end %>
 	<% end %>
 </td>
 <td valign='top' style='border-left:solid 1px #ccc;padding-left:15px;'>
 	<b>Whiteboards belonging to <%= @group.name %></b>
 	<br />
 	<ul>
-	<%= partial(:whiteboard, :with => @group.whiteboards, :as => :whiteboard) %>
+	<%= partial("shared/whiteboard_details", :with => @group.whiteboards, :as => :whiteboard) %>
 </td>
 </tr>
 </table>

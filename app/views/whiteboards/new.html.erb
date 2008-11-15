@@ -1,10 +1,13 @@
-<div class="breadcrumbs">
-<%= link_to 'Whiteboards', resource(:whiteboards) %>
-</div>
+<div align='center'>
+<h3>Create a new whiteboard</h3>
 
 <%= error_messages_for @whiteboard %>
 
 <%= form_for (@whiteboard, :action => resource(:whiteboards)) do %>
+  <table>
   <%= partial :form, :whiteboard => @whiteboard %>
-  <%= submit "Create" %>
+  <tr><td></td><td><%= submit "Create" %></td></tr>
+  </table>
 <% end =%>
+
+</div>

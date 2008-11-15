@@ -1,19 +1,25 @@
 <div align='center'>
-<table cellspacing='6' cellpadding='10'>
+<table cellspacing='15' cellpadding='10'>
 <tr>
 <% if session.user %>
 <td valign='top'>
 	<h3>My Groups</h3>
-	<%= link_to "<b>Create new group</b>", resource(:groups, :new) %><br /><br />
-	<%= partial :group, :with => session.user.groups, :as => :group %>
+	<%= link_to "<b>Create new group</b>", resource(:groups, :new) %><br />
+	<ul>
+	<%= partial "shared/group", :with => session.user.groups, :as => :group %>
+	</ul>
 	<% if @requested_groups!=[] %>
-		<br /><br />
-		<h3>Membership-requested groups</h3>
-		<%= partial :group, :with => @requested_groups, :as => :group %>		
+		<br />
+ 		<h3>Membership-requested groups</h3>
+		<ul>
+		<%= partial "shared/group", :with => @requested_groups, :as => :group %>		
+		</ul>
 	<% end %>
 </td>
-<% end %>
 <td valign='top' style='border-left:solid 1px #ccc;'>
+</td>
+<% end %>
+<td valign='top'>
 	<h3>Public Groups</h3>
 	<ul>
 		<%= partial :group_small, :with => @groups, :as => :group %>

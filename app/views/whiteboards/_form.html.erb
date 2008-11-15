@@ -1,5 +1,3 @@
-<table>
 <tr><td>Name:</td><td><%= text_field :name %></td></tr>
 <tr><td>Make public:</td><td><%= check_box :public %></td></tr>
 <tr><td>Group:</td><td><%= select :group_id, :collection => [[0, "None"]]+session.user.groups.map {|x| [x.id, x.name]} %></td></tr>
-</table>

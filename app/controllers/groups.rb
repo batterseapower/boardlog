@@ -87,9 +87,9 @@ class Groups < Application
 
   def edit(id)
     only_provides :html
+    @group = Group.get(id)    
     
     if @group.has_member?(session.user)
-	    @group = Group.get(id)
   	  raise NotFound unless @group
   	  display @group
 		else

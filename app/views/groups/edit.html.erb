@@ -1,4 +1,11 @@
-<h1>Groups controller, edit action</h1>
+<div align='center'>
+<h3>Edit group</h3>
 
-<p>Edit this file in <tt>app/views/groups/edit.html.erb</tt></p>
-<p>For more information and examples of CRUD views read <a href="http://wiki.merbivore.com/howto/crud_view_example_with_merb_using_erb"> this wiki page</a>
+<%= form_for(@group, :action => resource(:groups)) do %>
+	<table>
+  <%= partial :form, :group => @group %>
+	<tr><td></td><td align='left'><%= submit "Update group" %></td></tr>
+	</table>
+<% end =%>
+<b><%= link_to "Back to group", resource(@group) %></b>
+</div>

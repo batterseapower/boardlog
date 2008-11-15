@@ -9,7 +9,7 @@
 <body>
 <div align='center' id='main_container'>
 	<div align='center' id='top_container'>
-	<a href='front.html'><img src='/images/welcome.png' id='welcome_banner' /></a>
+	<a href='/'><img src='/images/welcome.png' id='welcome_banner' /></a>
 	</div>
 	<div id='content_container'>
 		<div id='content_inner_container'>
@@ -48,13 +48,13 @@
 				<div class='non_constrained_box'>
 				<h3><%= link_to "Public boards", url(:whiteboards) %> on Boardlog.</h3>
 					<ul>
-					<%= partial("whiteboard", :with => @whiteboards) %>
+					<%= partial("shared/whiteboard", :with => @whiteboards) %>
 					</ul>
 				</div>
 				<div class='non_constrained_box'>
 				<h3><%= link_to "Public groups", url(:groups) %> on Baoardlog.</h3>
 					<ul>
-					<%= partial("group", :with => @groups) %>
+					<%= partial("shared/group", :with => @groups) %>
 					</ul>
 				</div>
 			</div>
